@@ -106,7 +106,7 @@ END_TIMER(world, "initialize");
         if (world.size() > 1) {
           calc.set_protocol<3>(world,calc.param.econv);
           calc.make_nuclear_potential(world);
-          calc.initial_load_bal(world);
+          //calc.initial_load_bal(world);
         }
 //vama
         calc.set_protocol<3>(world,calc.param.protocol_data[0]);

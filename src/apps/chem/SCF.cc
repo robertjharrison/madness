@@ -859,25 +859,25 @@ namespace madness {
                 print("guess dens trace", nel);
             END_TIMER(world, "guess density");
             
-            if (world.size() > 1) {
-                START_TIMER(world);
-                LoadBalanceDeux < 3 > lb(world);
-                real_function_3d vnuc;
-                if (param.psp_calc){
-                    vnuc = gthpseudopotential->vlocalpot();}
-                else if (param.pure_ae){
-                    vnuc = potentialmanager->vnuclear();}
-                else {
-                    vnuc = potentialmanager->vnuclear();
-                    vnuc = vnuc + gthpseudopotential->vlocalpot();}     
+            // if (world.size() > 1) {
+            //     START_TIMER(world);
+            //     LoadBalanceDeux < 3 > lb(world);
+            //     real_function_3d vnuc;
+            //     if (param.psp_calc){
+            //         vnuc = gthpseudopotential->vlocalpot();}
+            //     else if (param.pure_ae){
+            //         vnuc = potentialmanager->vnuclear();}
+            //     else {
+            //         vnuc = potentialmanager->vnuclear();
+            //         vnuc = vnuc + gthpseudopotential->vlocalpot();}     
                 
-                lb.add_tree(vnuc,
-                            lbcost<double, 3>(vnucextra * 1.0, vnucextra * 8.0), false);
-                lb.add_tree(rho, lbcost<double, 3>(1.0, 8.0), true);
+            //     lb.add_tree(vnuc,
+            //                 lbcost<double, 3>(vnucextra * 1.0, vnucextra * 8.0), false);
+            //     lb.add_tree(rho, lbcost<double, 3>(1.0, 8.0), true);
                 
-                FunctionDefaults < 3 > ::redistribute(world, lb.load_balance(6.0));
-                END_TIMER(world, "guess loadbal");
-            }
+            //     FunctionDefaults < 3 > ::redistribute(world, lb.load_balance(6.0));
+            //     END_TIMER(world, "guess loadbal");
+            // }
             
             // Diag approximate fock matrix to get initial mos
             functionT vlocal;
@@ -913,25 +913,25 @@ namespace madness {
             }
             rho.clear();
             vlocal.reconstruct();
-            if (world.size() > 1) {
-                START_TIMER(world);
-                LoadBalanceDeux < 3 > lb(world);
-                real_function_3d vnuc;
-                if (param.psp_calc){
-                    vnuc = gthpseudopotential->vlocalpot();}
-                else if (param.pure_ae){
-                    vnuc = potentialmanager->vnuclear();}
-                else {
-                    vnuc = potentialmanager->vnuclear();
-                    vnuc = vnuc + gthpseudopotential->vlocalpot();}     
-                lb.add_tree(vnuc,
-                            lbcost<double, 3>(vnucextra * 1.0, vnucextra * 8.0), false);
-                for (unsigned int i = 0; i < ao.size(); ++i) {
-                    lb.add_tree(ao[i], lbcost<double, 3>(1.0, 8.0), false);
-                }
-                FunctionDefaults < 3 > ::redistribute(world, lb.load_balance(6.0));
-                END_TIMER(world, "guess loadbal");
-            }
+            // if (world.size() > 1) {
+            //     START_TIMER(world);
+            //     LoadBalanceDeux < 3 > lb(world);
+            //     real_function_3d vnuc;
+            //     if (param.psp_calc){
+            //         vnuc = gthpseudopotential->vlocalpot();}
+            //     else if (param.pure_ae){
+            //         vnuc = potentialmanager->vnuclear();}
+            //     else {
+            //         vnuc = potentialmanager->vnuclear();
+            //         vnuc = vnuc + gthpseudopotential->vlocalpot();}     
+            //     lb.add_tree(vnuc,
+            //                 lbcost<double, 3>(vnucextra * 1.0, vnucextra * 8.0), false);
+            //     for (unsigned int i = 0; i < ao.size(); ++i) {
+            //         lb.add_tree(ao[i], lbcost<double, 3>(1.0, 8.0), false);
+            //     }
+            //     FunctionDefaults < 3 > ::redistribute(world, lb.load_balance(6.0));
+            //     END_TIMER(world, "guess loadbal");
+            // }
             START_TIMER(world);
             tensorT overlap = matrix_inner(world, ao, ao, true);
             END_TIMER(world, "guess overlap");
@@ -1093,6 +1093,7 @@ namespace madness {
 
 
     void SCF::initial_load_bal(World & world) {
+        return;
         PROFILE_MEMBER_FUNC(SCF);
         LoadBalanceDeux < 3 > lb(world);
         real_function_3d vnuc;
@@ -1796,6 +1797,7 @@ namespace madness {
     
     void SCF::loadbal(World & world, functionT & arho, functionT & brho,
                       functionT & arho_old, functionT & brho_old, subspaceT & subspace) {
+        return;
         if (world.size() == 1)
             return;
         
